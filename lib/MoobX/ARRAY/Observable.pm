@@ -12,20 +12,12 @@ before [ qw/ FETCH FETCHSIZE /] => sub {
 };
 
 
-around STORE => sub($orig,$self,$index,$value) {
-    if( ref $value and ! tied $value ) {
-        my @old = @$value;
-        ::observable($value);
-        push @$value, @old;
-    }
-    $orig->($self,$index,$value);
-};
-
 after [ qw/ STORE PUSH CLEAR /] => sub {
     my $self = shift;
     for my $i ( 0.. $self->value->$#* ) {
         next if tied $self->value->[$i];
-        MoobX::observable( $self->value->[$i] );
+        next unless ref $self->value->[$i] eq 'ARRAY';
+        MoobX::observable( @{ $self->value->[$i] } );
     }
     MoobX::changing_observable( $self );
 };

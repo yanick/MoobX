@@ -18,8 +18,6 @@ has value => (
 sub EXTEND {
 }
 
-before CLEAR => sub { warn @_ };
-
 sub STORESIZE { }
 
 sub BUILD_ARGS {
