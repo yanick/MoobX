@@ -23,7 +23,10 @@ around STORE => sub($orig,$self,$index,$value) {
 
 after [ qw/ STORE PUSH CLEAR /] => sub {
     my $self = shift;
-#        ::observable($_) for grep { ! tied $_ } grep { ref  } $self->value->@*;
+    for my $i ( 0.. $self->value->$#* ) {
+        next if tied $self->value->[$i];
+        MoobX::observable( $self->value->[$i] );
+    }
     MoobX::changing_observable( $self );
 };
 

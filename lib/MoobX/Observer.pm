@@ -17,17 +17,26 @@ has value => (
     clearer => 1,
 );
 
+after clear_value => sub {
+    my $self = shift;
+    $self->value if $self->autorun;
+};
+
 has generator => (
     required => 1,
 );
+
+has autorun => ( is => 'ro', trigger => sub {
+    $_[0]->value
+});
 
 use Scalar::Util 'refaddr';
 use experimental 'signatures';
 
 sub dependencies($self) {
-    [ map {
+     map {
         $MoobX::graph->get_vertex_attribute( $_, 'info' );
-        } $MoobX::graph->successors( refaddr($self) ) ]
+        } $MoobX::graph->successors( refaddr($self) ) 
 }
 
 sub _build_value {

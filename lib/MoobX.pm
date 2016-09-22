@@ -16,7 +16,7 @@ use experimental 'signatures';
 
 use parent 'Exporter::Tiny';
 
-our @EXPORT = qw/ observer observable /;
+our @EXPORT = qw/ observer observable autorun /;
 
 use Graph::Directed;
 
@@ -64,13 +64,19 @@ sub observable :prototype(\[$%@]) {
     );
 
     if( $type eq 'SCALAR' ) {
+        my $value = $$ref;
         tie $$ref, $class;
+        $$ref = $value;
     }
     elsif( $type eq 'ARRAY' ) {
+        my @values = @$ref;
         tie @$ref, $class;
+        @$ref = @values;
     }
     elsif( not $type ) {
+        my $value = $ref;
         tie $ref, $class;
+        $ref = $value;
     }
 
 
@@ -78,6 +84,7 @@ sub observable :prototype(\[$%@]) {
 
 }
 
-sub observer :prototype(&) { MoobX::Observer->new( generator => shift ) }
+sub observer :prototype(&) { MoobX::Observer->new( generator => @_ ) }
+sub autorun :prototype(&)  { MoobX::Observer->new( autorun => 1, generator => @_ ) }
 
 1;
