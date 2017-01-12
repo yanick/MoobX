@@ -1,6 +1,6 @@
-use 5.20.0;
+use Test::More;
 
-use DDP;
+use 5.20.0;
 
 use MoobX;
 
@@ -8,18 +8,18 @@ observable my @things;
 
 my $list = observer { join ' ', map @$_, @things };
 
-say $list;
-
-p $list->dependencies;
+isy $list => '', "begins empty";
 
 @things = ( [1],[2],[3]);
 
-say $list;
-
-p $list->dependencies;
+is $list => '1 2 3';
 
 push @things, [4];
-say $list;
+
+is $list => '1 2 3 4', 'shallow change';
 
 $things[0][0] = 5;
-say $list;
+
+is $list => '5 2 3 4', 'deep change';
+
+done_testing;

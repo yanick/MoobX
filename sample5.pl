@@ -9,9 +9,15 @@ observable my @foo;
 
 my $value = observer { first { $_ > 2 } @foo };
 
+autorun {
+    say "foo changed!";
+    say join ' ', @foo;
+};
+
 say $value;
 
 use DDP;
 p $value->dependencies;
 
+push @foo, 12;
 
