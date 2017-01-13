@@ -9,20 +9,20 @@ package MoobX;
 
     use MoobX;
 
-    observable my $first_name;
-    observable my $last_name;
-    observable my $title;
+    my $first_name :Observable;
+    my $last_name  :Observable;
+    my $title      :Observable;
 
     my $address = observer {
         join ' ', $title || $first_name, $last_name;
     };
 
-    observable my @things;
+    my @things :Observable;
 
     say $address;  # nothing
 
     $first_name = "Yanick";
-    $last_name = "Champoux";
+    $last_name  = "Champoux";
 
     say $address;  # Yanick Champoux
 
@@ -72,6 +72,12 @@ there are a few good ways to do it, and one bad:
 
 That last one doesn't work because Perl parses it as C<observable( my $foo ) = 3>,
 and assigning values to non I<lvalue>ed functions don't work.
+
+Or, better, simply use the C<:Observable> attribute when you define the variable.
+
+    my $foo :Observable = 2;
+    my @bar :Observable = 1..10;
+    my %baz :Observable = ( a => 1, b => 2 );
 
 
 =head2 observer
@@ -140,7 +146,23 @@ use experimental 'signatures';
 
 use parent 'Exporter::Tiny';
 
-our @EXPORT = qw/ observer observable autorun /;
+our @EXPORT = qw/ observer observable autorun :attributes /;
+
+sub _exporter_expand_tag {
+    my( $class, $name, $args, $globals ) = @_;
+
+    return unless $name eq 'attributes';
+
+    my $target = $globals->{into};
+
+    eval qq{
+        package $target;
+        use parent 'MoobX::Attributes';
+        1;
+    } or die $@;
+
+    return ();
+}
 
 our $graph = Graph::Directed->new;
 
@@ -216,6 +238,6 @@ sub observable_ref {
 }
 
 sub observer :prototype(&) { MoobX::Observer->new( generator => @_ ) }
-sub autorun :prototype(&)  { MoobX::Observer->new( autorun => 1, generator => @_ ) }
+sub autorun  :prototype(&) { MoobX::Observer->new( autorun => 1, generator => @_ ) }
 
 1;
