@@ -1,4 +1,13 @@
 package MoobX::Array;
+# ABSTRACT: MoobX wrapper for array variables
+
+=head1 DESCRIPTION
+
+Class implementing a C<tie>ing interface for array variables.
+
+Used internally by L<MoobX>.
+
+=cut
 
 use Moose;
 

@@ -1,8 +1,67 @@
 package MoobX::Observer;
+# ABSTRACT: a MoobX object reacting to observable variable changes
+
+=head1 SYNOPSIS
+
+    use MoobX;
+    use MoobX::Observer;
+
+    observable( my $foo = 'hi' );
+
+    my $obs = MoobX::Observer->new(
+        generator => sub { scalar reverse $foo } 
+    );
+
+    $foo = 'hello';
+
+    say $obs; # prints 'olleh'
+
+=head1 DESCRIPTION
+
+This class implements the observer object used by L<MoobX>.
+
+=head1 OVERLOADED OPERATIONS
+
+MoobX::Observer objects are stringified using their C<value> attribute.
+
+=head1 METHODS
+
+=head2 new
+
+    my $obs = MoobX::Observer->new(
+        generator => sub { ... },
+        autorun    => 1,
+    );
+
+Constructor. Accepts two arguments:
+
+=over
+
+=item generator
+
+Function generating the observer value. Required.
+
+=item autorun
+
+If set to true, the observer will eagerly compute its value
+at creation time, and recompute it as soon as a dependency changes.
+Defaults to C<false>.
+
+=back
+
+=head2 value
+
+Returns the currently cached observer's value.
+
+=cut
 
 use 5.20.0;
 
+use Scalar::Util 'refaddr';
+
 use Moose;
+
+use experimental 'signatures';
 
 use overload 
     '""' => sub { $_[0]->value },
@@ -11,14 +70,13 @@ use overload
 use MooseX::MungeHas 'is_ro';
 
 has value => ( 
-    builder => 1,
-    lazy => 1,
+    builder   => 1,
+    lazy      => 1,
     predicate => 1,
-    clearer => 1,
+    clearer   => 1,
 );
 
-after clear_value => sub {
-    my $self = shift;
+after clear_value => sub($self) {
     $self->value if $self->autorun;
 };
 
@@ -26,12 +84,13 @@ has generator => (
     required => 1,
 );
 
-has autorun => ( is => 'ro', trigger => sub {
-    $_[0]->value
-});
+has autorun => ( 
+    is => 'ro', 
+    trigger => sub($self,@) {
+        $self->value
+    }
+);
 
-use Scalar::Util 'refaddr';
-use experimental 'signatures';
 
 sub dependencies($self) {
      map {

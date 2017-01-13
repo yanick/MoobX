@@ -1,4 +1,13 @@
 package MoobX::Hash;
+# ABSTRACT: MoobX wrapper for hash variables
+
+=head1 DESCRIPTION
+
+Class implementing a C<tie>ing interface for hash variables.
+
+Used internally by L<MoobX>.
+
+=cut
 
 use Moose;
 

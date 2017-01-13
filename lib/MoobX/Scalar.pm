@@ -1,4 +1,13 @@
 package MoobX::Scalar; 
+# ABSTRACT: MoobX wrapper for scalar variables
+
+=head1 DESCRIPTION
+
+Class implementing a C<tie>ing interface for scalar variables.
+
+Used internally by L<MoobX>.
+
+=cut
 
 use Moose;
 

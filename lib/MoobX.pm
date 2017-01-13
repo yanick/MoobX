@@ -49,6 +49,7 @@ The module automatically exports 3 functions: C<observer>, C<observable> and C<a
 
     observable my $foo;
     observable my @bar;
+    observable my %quux;
 
 Marks the variable as an observable, i.e. a variable which value can be 
 watched by observers, which will be updated when it changes.
@@ -90,8 +91,8 @@ and assigning values to non I<lvalue>ed functions don't work.
 Creates a L<MoobX::Observer> object. The value returned by the object will
 react to change to any C<observable> values within its definition.
 
-Observers are lazy, meaning that when their observable dependencies change,
-they'll only recompute their value the next time they are accessed. If you want
+Observers are lazy, meaning that they compute or recompute their values 
+when they are accessed. If you want
 them to eagerly recompute their values, C<autorun> is what you want.
 
 =head2 autorun 
@@ -126,7 +127,6 @@ Like C<observer>, but immediatly recompute its value when its observable depende
 use 5.20.0;
 
 use MoobX::Observer;
-use MoobX::Observable;
 
 our @DEPENDENCIES;
 our $WATCHING = 0;

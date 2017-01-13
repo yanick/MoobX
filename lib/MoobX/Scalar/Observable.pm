@@ -1,4 +1,13 @@
 package MoobX::Scalar::Observable;
+# ABSTRACT: Observable role for MobX scalars
+
+=head1 DESCRIPTION
+
+Role applied to L<MoobX::Scalar> objects to make them observables.
+
+Used internally by L<MoobX>.
+
+=cut
 
 use 5.20.0;
 
@@ -13,7 +22,6 @@ before 'FETCH' => sub {
 
 after 'STORE' => sub {
     my $self = shift;
-    $DB::single = 1;
     
     MoobX::observable_ref($self->value) if ref $self->value;
     MoobX::observable_modified( $self );

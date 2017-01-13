@@ -1,4 +1,13 @@
 package MoobX::Hash::Observable;
+# ABSTRACT: Observable role for MobX hashes
+
+=head1 DESCRIPTION
+
+Role applied to L<MoobX::hash> objects to make them observables.
+
+Used internally by L<MoobX>.
+
+=cut
 
 use Moose::Role;
 
