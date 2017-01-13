@@ -4,7 +4,11 @@ use 5.20.0;
 
 use MoobX;
 
-observable my $first_name;
+observable( my $first_name = 'Bob' );
+
+is $first_name => 'Bob', 'initialized correctly';
+
+$first_name = undef;
 observable my $last_name;
 observable my $title;
 

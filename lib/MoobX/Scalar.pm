@@ -3,10 +3,11 @@ package MoobX::Scalar;
 use Moose;
 
 has value => (
-    is => 'rw',
-    reader => 'FETCH',
+    is     => 'rw',
     writer => 'STORE',
 );
+
+sub FETCH { $_[0]->value }
 
 sub BUILD_ARGS {
     my( $class, @args ) = @_;

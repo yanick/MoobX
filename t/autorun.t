@@ -20,7 +20,6 @@ is $value => 5;
 observable( my $bar = 3 );
 
 autorun {
-    diag join ' ', $foo[0], $bar;
     pass if $foo[0] < $bar;
 };
 

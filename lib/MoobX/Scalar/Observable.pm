@@ -13,6 +13,9 @@ before 'FETCH' => sub {
 
 after 'STORE' => sub {
     my $self = shift;
+    $DB::single = 1;
+    
+    MoobX::observable_ref($self->value) if ref $self->value;
     MoobX::observable_modified( $self );
 };
 

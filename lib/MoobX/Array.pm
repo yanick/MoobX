@@ -15,8 +15,7 @@ has value => (
     },
 );
 
-sub EXTEND {
-}
+sub EXTEND { }
 
 sub STORESIZE { }
 
