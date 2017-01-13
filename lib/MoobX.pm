@@ -110,7 +110,7 @@ sub observable :prototype(\[$%@]) {
 
     my $type = reftype $ref;
 
-    my $class = 'MoobX::'.( $type || 'SCALAR' );
+    my $class = 'MoobX::'. ucfirst lc  $type || 'SCALAR';
 
     $class = with_traits( 
         map { use_module($_) }

@@ -1,4 +1,4 @@
-package MoobX::ARRAY;
+package MoobX::Array;
 
 use Moose;
 

@@ -1,4 +1,4 @@
-package MoobX::ARRAY::Observable;
+package MoobX::Array::Observable;
 
 use Moose::Role;
 

@@ -2,7 +2,6 @@ use Test::More;
 
 use 5.20.0;
 
-use Data::Printer;
 use MoobX;
 
 observable my $first_name;

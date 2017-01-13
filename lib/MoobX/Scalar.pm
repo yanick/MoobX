@@ -1,4 +1,4 @@
-package MoobX::SCALAR; 
+package MoobX::Scalar; 
 
 use Moose;
 

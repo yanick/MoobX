@@ -1,4 +1,4 @@
-package MoobX::SCALAR::Observable;
+package MoobX::Scalar::Observable;
 
 use 5.20.0;
 
