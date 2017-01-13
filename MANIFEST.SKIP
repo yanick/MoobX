@@ -1,6 +1,6 @@
 ^dist.ini
 ^MANIFEST.SKIP
-MoobX.*
+MoobX-.*
 ^\.gitignore
 ^\.git
 ^\.build
