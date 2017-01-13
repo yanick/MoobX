@@ -19,7 +19,7 @@ after [ qw/ STORE PUSH CLEAR /] => sub {
         next unless ref $self->value->[$i] eq 'ARRAY';
         MoobX::observable( @{ $self->value->[$i] } );
     }
-    MoobX::changing_observable( $self );
+    MoobX::observable_modified( $self );
 };
 
 

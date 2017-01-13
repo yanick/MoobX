@@ -13,7 +13,7 @@ before 'FETCH' => sub {
 
 after 'STORE' => sub {
     my $self = shift;
-    MoobX::changing_observable( $self );
+    MoobX::observable_modified( $self );
 };
 
 1;
