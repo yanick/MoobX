@@ -1,5 +1,7 @@
 Revision history for MoobX
 
-{{$NEXT}}
-
+0.0.1 2017-01-13
   - First version, unleashed on an unsuspecting world.
+
+  [ STATISTICS ]
+    - code churn: 3 files changed, 38 insertions(+), 3 deletions(-)
