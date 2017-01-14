@@ -50,9 +50,12 @@ is $::bar_counter => 1, 'changed, but not recomputed';
 $Thing::stuff = 'banana';
 is $::baz_counter => 2, 'reset and recomputed';
 
+$Thing::stuff = 'coconut';
+is $::baz_counter => 3, 'reset and recomputed';
+
 is $thing->bar => 'bb', 'recomputed';
-is $thing->baz => 'banana!', 'recomputed';
+is $thing->baz => 'coconut!', 'recomputed';
 is $::bar_counter => 2, 'changed, but not recomputed';
-is $::baz_counter => 2, 'reset and recomputed';
+is $::baz_counter => 3, 'reset and recomputed';
 
 done_testing;

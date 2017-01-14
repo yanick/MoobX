@@ -198,6 +198,7 @@ sub observable_modified($obs) {
             $pred, 'info'
         );
 
+        local @MoobX::DEPENDENCIES = ( @MoobX::DEPENDENCIES, $obs );
         $info->clear_value;
     }
 }

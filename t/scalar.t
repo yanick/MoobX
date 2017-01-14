@@ -26,4 +26,19 @@ $title = 'Dread Lord';
 
 is $address => 'Dread Lord Champoux';
 
+$title = 'Mr';
+
+is $address => 'Mr Champoux';
+
+subtest 'autorun' => sub {
+    plan tests => 3;
+    my $foo :Observable = 'a';    
+    my @expected = 'a'..'c';
+    autorun {
+        is $foo => shift @expected;
+    };
+    $foo = 'b';
+    $foo = 'c';
+};
+
 done_testing;

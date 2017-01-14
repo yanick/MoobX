@@ -103,7 +103,7 @@ sub _build_value {
     my $self = shift;
 
     local $MoobX::WATCHING = 1;
-    local @MoobX::DEPENDENCIES;
+    local @MoobX::DEPENDENCIES = @MoobX::DEPENDENCIES;
 
     my $new_value = $self->generator->();
 
