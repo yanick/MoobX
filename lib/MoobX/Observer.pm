@@ -1,59 +1,7 @@
 package MoobX::Observer;
+our $AUTHORITY = 'cpan:YANICK';
 # ABSTRACT: a MoobX object reacting to observable variable changes
-
-=head1 SYNOPSIS
-
-    use MoobX;
-    use MoobX::Observer;
-
-    observable( my $foo = 'hi' );
-
-    my $obs = MoobX::Observer->new(
-        generator => sub { scalar reverse $foo } 
-    );
-
-    $foo = 'hello';
-
-    say $obs; # prints 'olleh'
-
-=head1 DESCRIPTION
-
-This class implements the observer object used by L<MoobX>.
-
-=head1 OVERLOADED OPERATIONS
-
-MoobX::Observer objects are stringified using their C<value> attribute.
-
-=head1 METHODS
-
-=head2 new
-
-    my $obs = MoobX::Observer->new(
-        generator => sub { ... },
-        autorun    => 1,
-    );
-
-Constructor. Accepts two arguments:
-
-=over
-
-=item generator
-
-Function generating the observer value. Required.
-
-=item autorun
-
-If set to true, the observer will eagerly compute its value
-at creation time, and recompute it as soon as a dependency changes.
-Defaults to C<false>.
-
-=back
-
-=head2 value
-
-Returns the currently cached observer's value.
-
-=cut
+$MoobX::Observer::VERSION = '0.1.0';
 
 use 5.20.0;
 
@@ -117,3 +65,82 @@ sub _build_value {
 }
 
 1;
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+MoobX::Observer - a MoobX object reacting to observable variable changes
+
+=head1 VERSION
+
+version 0.1.0
+
+=head1 SYNOPSIS
+
+    use MoobX;
+    use MoobX::Observer;
+
+    observable( my $foo = 'hi' );
+
+    my $obs = MoobX::Observer->new(
+        generator => sub { scalar reverse $foo } 
+    );
+
+    $foo = 'hello';
+
+    say $obs; # prints 'olleh'
+
+=head1 DESCRIPTION
+
+This class implements the observer object used by L<MoobX>.
+
+=head1 OVERLOADED OPERATIONS
+
+MoobX::Observer objects are stringified using their C<value> attribute.
+
+=head1 METHODS
+
+=head2 new
+
+    my $obs = MoobX::Observer->new(
+        generator => sub { ... },
+        autorun    => 1,
+    );
+
+Constructor. Accepts two arguments:
+
+=over
+
+=item generator
+
+Function generating the observer value. Required.
+
+=item autorun
+
+If set to true, the observer will eagerly compute its value
+at creation time, and recompute it as soon as a dependency changes.
+Defaults to C<false>.
+
+=back
+
+=head2 value
+
+Returns the currently cached observer's value.
+
+=head1 AUTHOR
+
+Yanick Champoux <yanick@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2017 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
