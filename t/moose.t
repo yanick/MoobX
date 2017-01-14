@@ -4,7 +4,6 @@ use Test::More;
 package Thing {
     use Moose;
 
-    use MoobX::Traits;
     use MoobX;
 
     our $stuff :Observable = 'apple';
@@ -28,6 +27,7 @@ package Thing {
     has baz => (
         is => 'ro',
         traits => [ 'Observer' ],
+        lazy   => 0,
         default => sub {
             my $self = shift;
             $::baz_counter++;
@@ -54,3 +54,5 @@ is $thing->bar => 'bb', 'recomputed';
 is $thing->baz => 'banana!', 'recomputed';
 is $::bar_counter => 2, 'changed, but not recomputed';
 is $::baz_counter => 2, 'reset and recomputed';
+
+done_testing;

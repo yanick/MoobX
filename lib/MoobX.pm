@@ -1,11 +1,9 @@
 package MoobX;
-# ABSTRACT: Reactive programming framework heavily inspired by Javascript's MobX
+# ABSTRACT: Reactive programming framework heavily inspired by JavaScript's MobX
 
 =head1 SYNOPSIS
 
     use 5.20.0;
-
-    use Data::Printer;
 
     use MoobX;
 
@@ -16,8 +14,6 @@ package MoobX;
     my $address = observer {
         join ' ', $title || $first_name, $last_name;
     };
-
-    my @things :Observable;
 
     say $address;  # nothing
 
@@ -35,11 +31,14 @@ package MoobX;
 As I was learning how to use L<https://github.com/mobxjs/mobx|MobX>, I thought
 it'd be fun to try to implement something similar in Perl. So I did. 
 
+To set Moose object attributes to be observers or observables, take
+a gander at L<MoobX::Trait::Observable> and L<MoobX::Trait::Observer>.
+
 To have an idea of the mechanics of MoobX, see the two blog entries in the SEE ALSO
 section.
 
 This is also the early stages of life for this module. Consider everythign as alpha quality,
-and the API still malleable.
+and the API still subject to huge changes.
 
 =head1 EXPORTED FUNCTIONS
 
@@ -146,20 +145,23 @@ use experimental 'signatures';
 
 use parent 'Exporter::Tiny';
 
-our @EXPORT = qw/ observer observable autorun :attributes /;
+our @EXPORT = qw/ observer observable autorun :attributes :traits /;
 
 sub _exporter_expand_tag {
     my( $class, $name, $args, $globals ) = @_;
 
-    return unless $name eq 'attributes';
+    if ( $name eq 'attributes' ) {
+        my $target = $globals->{into};
 
-    my $target = $globals->{into};
-
-    eval qq{
-        package $target;
-        use parent 'MoobX::Attributes';
-        1;
-    } or die $@;
+        eval qq{
+            package $target;
+            use parent 'MoobX::Attributes';
+            1;
+        } or die $@;
+    }
+    elsif( $name eq 'traits' ) {
+        use_module( 'MoobX::Trait::'.$_) for qw/ Observer Observable /;
+    }
 
     return ();
 }

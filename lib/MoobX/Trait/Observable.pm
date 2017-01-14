@@ -1,6 +1,41 @@
-package MoobX::Traits;
-
 package MoobX::Trait::Observable;
+# ABSTRACT: turn a Moose object attribute into an MoobX observable
+
+=head1 SYNOPSIS
+
+    package Person;
+
+    use MoobX;
+
+    our $OPENING :Observable = 'Dear';
+
+    has name => (
+        traits => [ 'Observable' ],
+        is     => 'rw',
+    );
+
+    has address => (
+        is      => 'ro',
+        traits  => [ 'Observer' ],
+        default => sub {
+            my $self = shift;
+            join ' ', $Person::OPENING, $self->name
+        },
+    );
+
+    my $person = Person->new( name => 'Wilfred' );
+
+    print $person->address;  # Dear Wilfred
+
+    $person->name( 'Wilma' );
+
+    print $person->address;  # Dear Wilma
+
+=head1 DESCRIPTION
+
+Turns an object attribute into an observable.
+
+=cut
 
 use Moose::Role;
 use MoobX;
@@ -23,28 +58,5 @@ after initialize_instance_slot => sub($attr_self,$,$instance,$) {
     }) if $attr_self->has_write_method;
 
 };
-
-package Moose::Meta::Attribute::Custom::Trait::Observer;
-
-use Moose::Role;
-use MoobX::Observer;
-
-use experimental 'signatures';
-
-before _process_options => sub {
-    my( $self, $name, $args) = @_;
-
-    my $gen = $args->{default};
-
-    $args->{default} = sub { 
-        my @args = @_;
-        MoobX::Observer->new(
-            generator => sub { $gen->(@args) },
-            autorun => !$args->{lazy},
-        ) 
-    };
-    
-};
-
 
 1;
