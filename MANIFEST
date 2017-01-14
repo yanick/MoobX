@@ -31,5 +31,6 @@ t/autorun.t
 t/hash.t
 t/mixed.t
 t/moose.t
+t/no-deps.t
 t/scalar.t
 xt/release/pause-permissions.t

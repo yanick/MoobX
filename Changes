@@ -9,6 +9,7 @@ Revision history for MoobX
 
   [ ENHANCEMENTS ]
   - Adding Moose traits.
+  - Warn if an observer observes nothing.
 
   [ NEW FEATURES ]
 
