@@ -58,6 +58,7 @@ Returns the currently cached observer's value.
 use 5.20.0;
 
 use Scalar::Util 'refaddr';
+use Carp;
 
 use Moose;
 
@@ -105,6 +106,10 @@ sub _build_value {
     local @MoobX::DEPENDENCIES;
 
     my $new_value = $self->generator->();
+
+    local $Carp::CarpLevel = 2;
+    carp "MoobX observer doesn't observe anything"
+        unless @MoobX::DEPENDENCIES;
 
     MoobX::dependencies_for( $self, @MoobX::DEPENDENCIES );
 

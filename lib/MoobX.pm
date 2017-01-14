@@ -100,6 +100,24 @@ Observers are lazy, meaning that they compute or recompute their values
 when they are accessed. If you want
 them to eagerly recompute their values, C<autorun> is what you want.
 
+If an observer function is run and doesn't report any dependency,
+it'll emit the warning 'C<MoobX observer doesn't observe anything>',
+because chances are there's something weird going on. The warning can 
+be silenced via the global variable C<$MoobX::WARN_NO_DEPS>.
+
+    my $foo :Observable;
+
+    my $debugging = 0;
+
+    # if $debugging == 1, we'd get a warning
+    local $MoobX::WARN_NO_DEPS = 0;
+
+    my $spy = observer {
+        return unless $debugging;
+
+        say $foo;
+    };
+
 =head2 autorun 
 
     observable my $foo;
@@ -113,6 +131,7 @@ them to eagerly recompute their values, C<autorun> is what you want.
     $foo = 2; # prints '$foo is now 2'
 
 Like C<observer>, but immediatly recompute its value when its observable dependencies change.
+
 
 =head1 SEE ALSO
 
@@ -146,6 +165,8 @@ use experimental 'signatures';
 use parent 'Exporter::Tiny';
 
 our @EXPORT = qw/ observer observable autorun :attributes :traits /;
+
+our $WARN_NO_DEPS = 1;
 
 sub _exporter_expand_tag {
     my( $class, $name, $args, $globals ) = @_;
