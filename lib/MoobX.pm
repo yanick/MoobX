@@ -139,7 +139,7 @@ Like C<observer>, but immediatly recompute its value when its observable depende
 
 =item L<https://github.com/mobxjs/mobx|MobX> - the original inspiration
 
-=item L<http://techblog.babyl.ca/entry/moobx> and L<http://techblog.babyl.ca/entry/moobx-2> - the two blog entries that introduced MobX.
+=item L<https://techblog.babyl.ca/entry/moobx> and L<https://techblog.babyl.ca/entry/moobx-2> - the two blog entries that introduced MobX.
     
 
 =back
