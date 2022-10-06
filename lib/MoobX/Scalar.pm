@@ -1,13 +1,7 @@
-package MoobX::Scalar; 
+package MoobX::Scalar;
+our $AUTHORITY = 'cpan:YANICK'; 
 # ABSTRACT: MoobX wrapper for scalar variables
-
-=head1 DESCRIPTION
-
-Class implementing a C<tie>ing interface for scalar variables.
-
-Used internally by L<MoobX>.
-
-=cut
+$MoobX::Scalar::VERSION = '0.1.1';
 
 use Moose;
 
@@ -29,3 +23,36 @@ sub BUILD_ARGS {
 sub TIESCALAR { $_[0]->new( value => $_[1]) }
 
 1;
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+MoobX::Scalar - MoobX wrapper for scalar variables
+
+=head1 VERSION
+
+version 0.1.1
+
+=head1 DESCRIPTION
+
+Class implementing a C<tie>ing interface for scalar variables.
+
+Used internally by L<MoobX>.
+
+=head1 AUTHOR
+
+Yanick Champoux <yanick@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2022, 2017 by Yanick Champoux.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
