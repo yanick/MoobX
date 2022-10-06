@@ -165,26 +165,33 @@ use experimental 'signatures';
 use parent 'Exporter::Tiny';
 
 our @EXPORT = qw/ observer observable autorun :attributes :traits /;
+our %EXPORT_TAGS = (
+    'attributes' => [ '__ATTRIBUTES__' ],
+    'traits'     => [ '__TRAITS__' ],
+);
 
 our $WARN_NO_DEPS = 1;
 
-sub _exporter_expand_tag {
-    my( $class, $name, $args, $globals ) = @_;
+sub _exporter_expand_sub {
+    my ( $class, $name, $args, $globals ) = ( shift, @_ );
 
-    if ( $name eq 'attributes' ) {
+    if ( $name eq '__ATTRIBUTES__' ) {
         my $target = $globals->{into};
-
+        return if ref $target;
+        local $@;
         eval qq{
             package $target;
             use parent 'MoobX::Attributes';
             1;
         } or die $@;
+        return;
     }
-    elsif( $name eq 'traits' ) {
-        use_module( 'MoobX::Trait::'.$_) for qw/ Observer Observable /;
+    elsif ( $name eq '__TRAITS__' ) {
+        use_module( "MoobX::Trait::$_" ) for qw/ Observer Observable /;
+        return;
     }
 
-    return ();
+    return $class->SUPER::_exporter_expand_sub( $name, $args, $globals );
 }
 
 our $graph = Graph::Directed->new;
