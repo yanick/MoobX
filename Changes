@@ -4,6 +4,7 @@ Revision history for MoobX
   [ API CHANGES ]
 
   [ BUG FIXES ]
+  - Adapt to changes to Exporter::Tiny (#7, thanks to Toby Inkster)
 
   [ DOCUMENTATION ]
 
