@@ -4,7 +4,6 @@ Revision history for MoobX
  [API CHANGES]
 
  [BUG FIXES]
- - Fix urls in SEE ALL (#9, Mohammad S Anwar)
 
  [DOCUMENTATION]
 
@@ -13,6 +12,13 @@ Revision history for MoobX
  [NEW FEATURES]
 
  [STATISTICS]
+
+0.1.2 2022-10-08
+ [BUG FIXES]
+ - Fix urls in SEE ALL (#9, Mohammad S Anwar)
+
+ [STATISTICS]
+ - code churn: 2 files changed, 23 insertions(+), 16 deletions(-)
 
 0.1.1 2022-10-06
  [BUG FIXES]
