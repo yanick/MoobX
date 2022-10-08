@@ -4,6 +4,7 @@ Revision history for MoobX
  [API CHANGES]
 
  [BUG FIXES]
+ - Fix urls in SEE ALL (#9, Mohammad S Anwar)
 
  [DOCUMENTATION]
 
